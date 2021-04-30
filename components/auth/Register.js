@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import {View, Button, TextInput} from "react-native-web";
+import {View, Button, TextInput, Text} from "react-native-web";
 import firebase from 'firebase'
 
 export class Register extends Component {
-    constructor(props) {
+    constructor({props}) {
         super(props);
         this.state = {
             name: 'Dummy Pradhan',
@@ -16,7 +16,20 @@ export class Register extends Component {
     SignUp() {
         //Code Goes Here
         const {name, email, password} = this.state;
-        firebase.auth().createUserWithEmailAndPassword(email, password).then(results => console.log(results)).catch(error => console.log(error));
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(results => {
+            console.log(results)
+            if (results.user) {
+                results.user.updateProfile({
+                    displayName: name
+                })
+            }
+            firebase.firestore().collection("users")
+                .doc(firebase.auth().currentUser.uid).set({
+                name, email
+            }).then(r => console.log('Successfully Registered.'))
+        }).catch(function (error) {
+            alert(error.message())
+        });
     }
 
     render() {
@@ -28,10 +41,13 @@ export class Register extends Component {
                 <TextInput placeholder="password" secureTextEntry={true}
                            onChangeText={(password) => this.setState({password})} required/>
                 <Button onPress={() => this.SignUp()} title="Sign Up"/>
+                <Text>Already a FastConnect User?<Button
+                    title='Login'
+                    onPress={() => this.props.navigation.navigate('Login')}
+                /></Text>
             </View>
         )
     }
-
 }
 
 export default Register
