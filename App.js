@@ -3,9 +3,16 @@ import {View, Text} from 'react-native'
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import SplashScreen from './components/auth/Splash'
+import HomeScreen from './components/Home'
 import RegisterScreen from './components/auth/Register'
 import firebase from 'firebase'
 import LoginScreen from "./components/auth/Login";
+import {Provider} from 'react-redux'
+import {createStore, applyMiddleware} from "redux";
+import rootReducer from './redux/reducer'
+import thunk from 'redux-thunk'
+
+const store = createStore(rootReducer, applyMiddleware(thunk))
 
 const firebaseConfig = {
     apiKey: "AIzaSyATHtwtzIqrhOn7yMUb0t0kxXqZY6i8YZg",
@@ -54,18 +61,21 @@ export class App extends Component {
         }
         if (!signedIn) {
             return (<NavigationContainer>
-                <Stack.Navigator initialRouteName="Splash">
-                    <Stack.Screen name="Splash" component={SplashScreen} options={{headerShown: false}}/>
+                <Stack.Navigator initialRouteName="FlashConnect">
+                    <Stack.Screen name="FastConnect" component={SplashScreen} options={{headerShown: false}}/>
                     <Stack.Screen name={"Register"} component={RegisterScreen}/>
                     <Stack.Screen name={"Login"} component={LoginScreen}/>
                 </Stack.Navigator>
             </NavigationContainer>)
         }
         return (
-            <>
-                <View style={{flex: 1, justifyContent: 'center'}}><Text
-                > User is Logged in < /Text></View>
-            </>
+            <Provider store={store}>
+                <NavigationContainer>
+                    <Stack.Navigator initialRouteName="Home">
+                        <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
+                    </Stack.Navigator>
+                </NavigationContainer>
+            </Provider>
         );
     }
 }
