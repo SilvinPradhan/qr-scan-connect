@@ -1,16 +1,18 @@
 import React, {Component} from 'react'
 import {View} from "react-native";
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import ScanScreen from './home/Scan'
-import ProfileScreen from './home/Profile'
 import GenerateScreen from './home/Generate'
+import ProfileScreen from './home/Profile'
 
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {fetchUser} from "../redux/actions";
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
+const EmptyScreen = () => {
+    return (null)
+}
 
 export class Home extends Component {
     componentDidMount() {
@@ -24,18 +26,19 @@ export class Home extends Component {
         }
         return (
             <Tab.Navigator initialRouteName="Profile">
-                <Tab.Screen name="Scan" component={ScanScreen} options={{
+                <Tab.Screen name="Scan" component={EmptyScreen}  listeners={
+                    ({navigation}) => ({
+                        tabPress: event => {
+                            event.preventDefault();
+                            navigation.navigate("Add")
+                        }
+                    })
+                }  options={{
                     tabBarIcon: ({
                                      color, size
                                  }) => (<MaterialCommunityIcons name="qrcode-scan" color={color} size={26}/>)
                 }}/>
-                <Tab.Screen name="Generate" component={GenerateScreen} listeners={
-                    ({navigation}) => ({
-                        tabPress: event => {
-                            event.preventDefault()
-                        }
-                    })
-                } options={{
+                <Tab.Screen name="Generate" component={GenerateScreen} options={{
                     tabBarIcon: ({
                                      color, size
                                  }) => (<MaterialCommunityIcons name="plus-box" color={color} size={26}/>)

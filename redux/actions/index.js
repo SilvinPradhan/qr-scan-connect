@@ -1,6 +1,13 @@
 import firebase from 'firebase'
-import {USER_STATE_CHANGE} from "../constants/index";
+import {USER_STATE_CHANGE, CLEAR_DATA} from "../constants/index";
 
+export function clearAllData() {
+    return ((dispatch) => {
+        dispatch({
+            type:CLEAR_DATA
+        })
+    })
+}
 export function fetchUser() {
     return ((dispatch) => {
         firebase.firestore().collection("users")

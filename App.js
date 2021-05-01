@@ -7,6 +7,7 @@ import HomeScreen from './components/Home'
 import RegisterScreen from './components/auth/Register'
 import firebase from 'firebase'
 import LoginScreen from "./components/auth/Login";
+import AddScreen from "./components/home/Add"
 import {Provider} from 'react-redux'
 import {createStore, applyMiddleware} from "redux";
 import rootReducer from './redux/reducer'
@@ -73,6 +74,7 @@ export class App extends Component {
                 <NavigationContainer>
                     <Stack.Navigator initialRouteName="Home">
                         <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
+                        <Stack.Screen name="Add" component={AddScreen}/>
                     </Stack.Navigator>
                 </NavigationContainer>
             </Provider>

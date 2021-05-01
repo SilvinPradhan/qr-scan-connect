@@ -1,3 +1,5 @@
+import { CLEAR_DATA} from "../constants/index";
+
 const initState = {
     currentUser: null
 }
