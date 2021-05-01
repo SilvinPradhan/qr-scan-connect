@@ -1,16 +1,38 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {Text, View, Button} from "react-native";
 import firebase from "firebase";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {fetchUser} from "../../redux/actions";
 
-const Profile = () => {
-    const logOut = () => {
+export class Profile extends Component {
+    componentDidMount() {
+        this.props.fetchUser()
+    }
+
+    const
+    logOut = () => {
         firebase.auth().signOut().then(() => console.log('Successfully signed out.'))
     }
-    return (
-        <View>
-            <Text style={{flex: 1, justifyContent: 'center'}}>Welcome, Simran</Text>
-            <Button title="Logout" onPress={() => logOut()}></Button>
-        </View>
-    )
+
+    render() {
+        const {currentUser} = this.props;
+        console.log(currentUser)
+        if(currentUser==undefined) {
+            return (<View></View>)
+        }
+        return (
+            <View>
+                <Text style={{flex: 1, justifyContent: 'center'}}>Welcome, {currentUser.name}</Text>
+                <Button title="Logout" onPress={this.logOut}></Button>
+            </View>
+        )
+    }
+
 }
-export default Profile
+
+const mapStateToProps = (store) => ({
+    currentUser: store.userState.currentUser
+})
+const mapDispatchToProps = (dispatch) => bindActionCreators({fetchUser}, dispatch)
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

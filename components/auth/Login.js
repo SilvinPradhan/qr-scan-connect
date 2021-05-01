@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Button, TextInput, Text} from "react-native-web";
+import {View, Button, TextInput, Text} from "react-native";
 import firebase from 'firebase'
 
 export class Login extends Component {
