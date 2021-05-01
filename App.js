@@ -12,6 +12,7 @@ import {Provider} from 'react-redux'
 import {createStore, applyMiddleware} from "redux";
 import rootReducer from './redux/reducer'
 import thunk from 'redux-thunk'
+import {ActivityIndicator} from "react-native-paper";
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
@@ -57,8 +58,7 @@ export class App extends Component {
     render() {
         const {loaded, signedIn} = this.state;
         if (!loaded) {
-            return (<View style={{flex: 1, justifyContent: 'center'}}><Text
-            > Loading < /Text></View>)
+            return (<View style={{flex: 1, justifyContent: 'center'}}><ActivityIndicator size="large"/> </View>)
         }
         if (!signedIn) {
             return (<NavigationContainer>
