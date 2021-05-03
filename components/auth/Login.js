@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
-import {View, Button, TextInput, Text} from "react-native";
+import {Image, Text, TextInput, TouchableOpacity, View, Button} from "react-native";
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import firebase from 'firebase'
+
+import styles from './LoginStyles';
 
 export class Login extends Component {
     constructor(props) {
@@ -16,13 +19,24 @@ export class Login extends Component {
 
     SignIn() {
         //Code Goes Here
-        const {signedIn, email, password} = this.state;
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then((results) => {
-                this.setState({signedIn: true, ...state})
-                console.log(results)
-            })
-            .catch(error => console.log(error));
+        const {email, password} = this.state;
+        if (email > 0 && password > 5) {
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((results) => {
+                    const uid = results.user.uid
+                    firebase.firestore().collection('users').doc(uid).get().then(firestoreDoc => {
+                        if (!firestoreDoc.exists) {
+                            alert('User does not exist anymore.')
+                            return
+                        }
+                    }).catch(error => {
+                        alert(error)
+                    });
+                    this.setState({signedIn: true, ...state})
+                    console.log(results)
+                })
+                .catch(error => alert(error));
+        }
     }
 
     GoogleGo = async () => {
@@ -32,14 +46,38 @@ export class Login extends Component {
     render() {
 
         return (
-            <View>
-                <TextInput placeholder="email" onChangeText={(email) => this.setState({email})} required/>
-                <TextInput placeholder="password" secureTextEntry={true}
-                           onChangeText={(password) => this.setState({password})} required/>
-                <Button onPress={() => this.SignIn()} title="Login"/>
-                <Button onPress={() => this.GoogleGo()} title={"Google Sign In"}/>
-                <Text>Do not have an account? <Button title="Register"
-                                                      onPress={() => this.props.navigation.navigate('Register')}></Button></Text>
+            <View style={styles.container}>
+                <KeyboardAwareScrollView
+                    style={{flex: 1, width: '100%'}}
+                    keyboardShouldPersistTaps="always">
+                    <Image
+                        style={styles.logo}
+                        source={require('../../assets/qr-code.png')}
+                    />
+                    <TextInput style={styles.input}
+                               placeholder='E-mail'
+                               placeholderTextColor="#aaaaaa" onChangeText={(email) => this.setState({email})}
+                               underlineColorAndroid="transparent"
+                               autoCapitalize="none"
+                               required/>
+                    <TextInput style={styles.input}
+                               placeholderTextColor="#aaaaaa"
+                               secureTextEntry
+                               placeholder='Password'
+                               onChangeText={(password) => this.setState({password})}
+                               underlineColorAndroid="transparent"
+                               autoCapitalize="none"
+                               required/>
+                    <TouchableOpacity
+                        style={styles.button} onPress={() => this.SignIn()}> <Text style={styles.buttonTitle}>Log
+                        in</Text></TouchableOpacity>
+                    {/*<Button onPress={() => this.GoogleGo()} title={"Google Sign In"}/>*/}
+                    <View style={styles.footerView}>
+                        <Text style={styles.footerText}>Don't have an account? <Text
+                            onPress={() => this.props.navigation.navigate('Register')} style={styles.footerLink}>Sign
+                            up</Text></Text>
+                    </View>
+                </KeyboardAwareScrollView>
             </View>
         )
     }

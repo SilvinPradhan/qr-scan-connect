@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import 'react-native-gesture-handler';
 import {View, Text} from 'react-native'
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -13,6 +14,14 @@ import {createStore, applyMiddleware} from "redux";
 import rootReducer from './redux/reducer'
 import thunk from 'redux-thunk'
 import {ActivityIndicator} from "react-native-paper";
+import {decode, encode} from 'base-64'
+
+if (!global.btoa) {
+    global.btoa = encode
+}
+if (!global.atob) {
+    global.atob = decode
+}
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 

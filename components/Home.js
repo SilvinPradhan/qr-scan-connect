@@ -25,15 +25,15 @@ export class Home extends Component {
             return <View></View>
         }
         return (
-            <Tab.Navigator initialRouteName="Profile">
-                <Tab.Screen name="Scan" component={EmptyScreen}  listeners={
+            <Tab.Navigator initialRouteName="Profile" labeled={false}>
+                <Tab.Screen name="Scan" component={EmptyScreen} listeners={
                     ({navigation}) => ({
                         tabPress: event => {
                             event.preventDefault();
                             navigation.navigate("Add")
                         }
                     })
-                }  options={{
+                } options={{
                     tabBarIcon: ({
                                      color, size
                                  }) => (<MaterialCommunityIcons name="qrcode-scan" color={color} size={26}/>)
