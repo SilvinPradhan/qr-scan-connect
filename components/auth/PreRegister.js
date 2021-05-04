@@ -2,9 +2,8 @@ import React, {Component} from 'react'
 import {View, Button, TextInput, Text, TouchableOpacity} from "react-native";
 import firebase from 'firebase'
 import 'react-native-gesture-handler'
-import Styles from './PreRegisterStyle'
+import styles from './PreRegisterStyle'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import styles from "./LoginStyles";
 
 export class PreRegister extends Component {
     constructor(props) {
