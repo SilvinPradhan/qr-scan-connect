@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import 'react-native-gesture-handler'
 import {Image, Text, TextInput, TouchableOpacity, View, Button} from "react-native";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import firebase from 'firebase'
@@ -20,27 +21,23 @@ export class Login extends Component {
     SignIn() {
         //Code Goes Here
         const {email, password} = this.state;
-        if (email > 0 && password > 5) {
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then((results) => {
-                    const uid = results.user.uid
-                    firebase.firestore().collection('users').doc(uid).get().then(firestoreDoc => {
-                        if (!firestoreDoc.exists) {
-                            alert('User does not exist anymore.')
-                            return
-                        }
-                    }).catch(error => {
-                        alert(error)
-                    });
-                    this.setState({signedIn: true, ...state})
-                    console.log(results)
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((results) => {
+                const uid = results.user.uid
+                firebase.firestore().collection('users').doc(uid).get().then(firestoreDoc => {
+                    if (!firestoreDoc.exists) {
+                        alert('User does not exist anymore.')
+                        return
+                    }
                 })
-                .catch(error => alert(error));
-        }
+                // console.log(results)
+            })
+            .catch(error => console.log(error));
+        // console.log(this.state)
     }
 
-    GoogleGo = async () => {
-        //    Google Auth Provider - Sign in
+    signInWithGoogle = async () => {
+       console.log("Google Sign in")
     }
 
     render() {
@@ -71,7 +68,9 @@ export class Login extends Component {
                     <TouchableOpacity
                         style={styles.button} onPress={() => this.SignIn()}> <Text style={styles.buttonTitle}>Log
                         in</Text></TouchableOpacity>
-                    {/*<Button onPress={() => this.GoogleGo()} title={"Google Sign In"}/>*/}
+                    <TouchableOpacity
+                        style={styles.button} onPress={() => this.signInWithGoogle()}> <Text
+                        style={styles.buttonTitle}>Sign In with Google</Text></TouchableOpacity>
                     <View style={styles.footerView}>
                         <Text style={styles.footerText}>Don't have an account? <Text
                             onPress={() => this.props.navigation.navigate('Register')} style={styles.footerLink}>Sign

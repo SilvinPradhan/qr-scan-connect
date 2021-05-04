@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import 'react-native-gesture-handler';
-import {View, Text} from 'react-native'
+import {View, ActivityIndicator} from 'react-native'
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import SplashScreen from './components/auth/Splash'
 import HomeScreen from './components/Home'
 import RegisterScreen from './components/auth/Register'
+import PreRegisterScreen from './components/auth/PreRegister'
 import firebase from 'firebase'
 import LoginScreen from "./components/auth/Login";
 import AddScreen from "./components/home/Add"
@@ -13,8 +14,8 @@ import {Provider} from 'react-redux'
 import {createStore, applyMiddleware} from "redux";
 import rootReducer from './redux/reducer'
 import thunk from 'redux-thunk'
-import {ActivityIndicator} from "react-native-paper";
 import {decode, encode} from 'base-64'
+import styles from "./AppStyles";
 
 if (!global.btoa) {
     global.btoa = encode
@@ -67,13 +68,25 @@ export class App extends Component {
     render() {
         const {loaded, signedIn} = this.state;
         if (!loaded) {
-            return (<View style={{flex: 1, justifyContent: 'center'}}><ActivityIndicator size="large"/> </View>)
+            return (<View style={styles.container}><ActivityIndicator size="large"/>
+            </View>)
         }
         if (!signedIn) {
-            return (<NavigationContainer>
-                <Stack.Navigator initialRouteName="FlashConnect">
-                    <Stack.Screen name="FastConnect" component={SplashScreen} options={{headerShown: false}}/>
+            return (<
+                NavigationContainer>
+                < Stack.Navigator
+                    initialRouteName="FlashConnect">
+                    < Stack.Screen
+                        name="FastConnect"
+                        component={SplashScreen}
+                        options={
+                            {
+                                headerShown: false
+                            }
+                        }
+                    />
                     <Stack.Screen name={"Register"} component={RegisterScreen}/>
+                    <Stack.Screen name={"PreRegister"} component={PreRegisterScreen}/>
                     <Stack.Screen name={"Login"} component={LoginScreen}/>
                 </Stack.Navigator>
             </NavigationContainer>)
