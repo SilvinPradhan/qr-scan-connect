@@ -3,7 +3,13 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'flex-start'
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    subContainer: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center"
     },
     titleContainer: {
         color: 'white',
@@ -28,6 +34,15 @@ export default StyleSheet.create({
         backgroundColor: 'transparent',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    fadingContainer: {
+        backgroundColor: "powderblue"
+    },
+    fadingText: {
+        fontSize: 28
+    },
+    buttonRow: {
+        justifyContent: "space-evenly",
+        marginVertical: 16
     }
-
 })

@@ -65,16 +65,16 @@ export class Login extends Component {
                                underlineColorAndroid="transparent"
                                autoCapitalize="none"
                                required/>
-                    <TouchableOpacity
-                        style={styles.button} onPress={() => this.SignIn()}> <Text style={styles.buttonTitle}>Log
-                        in</Text></TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.button} onPress={() => this.signInWithGoogle()}> <Text
-                        style={styles.buttonTitle}>Sign In with Google</Text></TouchableOpacity>
+                    {/*<TouchableOpacity*/}
+                    {/*    style={styles.button} onPress={() => this.SignIn()}> <Text style={styles.buttonTitle}>Log*/}
+                    {/*    in</Text></TouchableOpacity>*/}
+                    {/*<TouchableOpacity*/}
+                    {/*    style={styles.button} onPress={() => this.signInWithGoogle()}> <Text*/}
+                    {/*    style={styles.buttonTitle}>Sign In with Google</Text></TouchableOpacity>*/}
                     <View style={styles.footerView}>
-                        <Text style={styles.footerText}>Don't have an account? <Text
-                            onPress={() => this.props.navigation.navigate('Register')} style={styles.footerLink}>Sign
-                            up</Text></Text>
+                        {/*<Text style={styles.footerText}>Don't have an account? <Text*/}
+                        {/*    onPress={() => this.props.navigation.navigate('Register')} style={styles.footerLink}>Sign*/}
+                        {/*    up</Text></Text>*/}
                     </View>
                 </KeyboardAwareScrollView>
             </View>

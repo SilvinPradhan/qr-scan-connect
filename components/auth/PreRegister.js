@@ -28,7 +28,8 @@ export class PreRegister extends Component {
             }
             await firebase.auth().sendSignInLinkToEmail(email, config).then(() => {
                 console.log('Email has been sent. Please check your email')
-                alert('Email has been sent. Please verify your email.')
+                alert('Email has been sent. Please verify your email.');
+
             })
             //     .then(
             //     () => {
