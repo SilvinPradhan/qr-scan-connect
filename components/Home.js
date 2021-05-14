@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {View} from "react-native";
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import GenerateScreen from './home/Generate'
+import FeedScreen from './home/Feed'
 import ProfileScreen from './home/Profile'
 
 import {connect} from "react-redux";
@@ -26,7 +26,12 @@ export class Home extends Component {
         }
         return (
             <Tab.Navigator initialRouteName="Profile" labeled={false}>
-                <Tab.Screen name="Scan" component={EmptyScreen} listeners={
+                <Tab.Screen name="Feed" component={FeedScreen} options={{
+                    tabBarIcon: ({
+                                     color, size
+                                 }) => (<MaterialCommunityIcons name="home" color={color} size={26}/>)
+                }}/>
+                <Tab.Screen name="Post" component={EmptyScreen} listeners={
                     ({navigation}) => ({
                         tabPress: event => {
                             event.preventDefault();
@@ -34,11 +39,6 @@ export class Home extends Component {
                         }
                     })
                 } options={{
-                    tabBarIcon: ({
-                                     color, size
-                                 }) => (<MaterialCommunityIcons name="qrcode-scan" color={color} size={26}/>)
-                }}/>
-                <Tab.Screen name="Generate" component={GenerateScreen} options={{
                     tabBarIcon: ({
                                      color, size
                                  }) => (<MaterialCommunityIcons name="plus-box" color={color} size={26}/>)
