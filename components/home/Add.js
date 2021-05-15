@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, Button, Image} from 'react-native';
-import {Camera} from 'expo-camera';
+import {Camera} from 'expo-camera'
+import * as ImagePicker from 'expo-image-picker'
+import {TouchableOpacity} from "react-native";
 
 export default function Add() {
     const [hasPermission, setHasPermission] = useState(null);
@@ -34,7 +36,9 @@ export default function Add() {
     return (
         <View style={styles.container}>
             <View style={styles.cameraContainer}>
-                <Camera style={styles.fixedRatio} type={type} ratio={'4:3'} ref={ref => setCamera(ref)}/>
+                <Camera style={styles.fixedRatio} type={type} ratio={'1:1'} ref={ref => setCamera(ref)}>
+                    <TouchableOpacity style={styles.captureButton} onPress={() => takePicture()}/>
+                </Camera>
             </View>
             <Button
                 style={styles.button}
@@ -47,18 +51,16 @@ export default function Add() {
                     );
                 }}>
             </Button>
-            <Button title='Take Picture' onPress={() => takePicture()}/>
             {
                 image && <Image source={{uri: image}} style={styles.captureImage}/>
             }
-
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     fixedRatio: {
         flex: 1,
@@ -80,6 +82,14 @@ const styles = StyleSheet.create({
     },
     captureImage: {
         flex: 1
+    },
+    captureButton: {
+        alignSelf: 'center',
+        alignItems: 'center',
+        width: 40,
+        height: 40,
+        bottom: 0, borderRadius: 50,
+        backgroundColor: '#fff'
     }
 });
 
