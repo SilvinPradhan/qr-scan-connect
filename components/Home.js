@@ -25,13 +25,13 @@ export class Home extends Component {
             return <View></View>
         }
         return (
-            <Tab.Navigator initialRouteName="Profile" labeled={false}>
+            <Tab.Navigator initialRouteName="Feed" labeled={false}>
                 <Tab.Screen name="Feed" component={FeedScreen} options={{
                     tabBarIcon: ({
                                      color, size
                                  }) => (<MaterialCommunityIcons name="home" color={color} size={26}/>)
                 }}/>
-                <Tab.Screen name="Post" component={EmptyScreen} listeners={
+                <Tab.Screen name="PostContainer" component={EmptyScreen} listeners={
                     ({navigation}) => ({
                         tabPress: event => {
                             event.preventDefault();
