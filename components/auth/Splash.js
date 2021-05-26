@@ -10,7 +10,7 @@ export default function Splash({navigation}) {
             <StatusBar style='auto' hidden={true}/>
             <Text style={{textAlign: 'center', flex: 1}}>FastConnect</Text>
             <Button title={"PreRegister"} onPress={() => navigation.navigate('PreRegister')}/>
-            <Button title={"Register"} onPress={() => navigation.navigate('Register')}/>
+            {/*<Button title={"Register"} onPress={() => navigation.navigate('Register')}/>*/}
             <Button title={"Login"} onPress={() => navigation.navigate('Login')}/>
         </View>
     )

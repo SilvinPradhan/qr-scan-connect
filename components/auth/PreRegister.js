@@ -49,7 +49,8 @@ export class PreRegister extends Component {
         return (
             <View style={styles.container}>
                 <KeyboardAwareScrollView style={{flex: 1, width: '100%'}} keyboardShouldPersistTaps="always">
-                    <Text style={{flex: 1, justifyContent: 'center', alignSelf: 'center'}}>Pre-Register</Text>
+                    <Text style={{flex: 1, justifyContent: 'center', alignSelf: 'center', marginTop: '5px'}}>Register
+                        Email</Text>
                     <TextInput style={styles.input}
                                placeholder='E-mail'
                                placeholderTextColor="#aaaaaa" onChangeText={(email) => this.setState({email})}

@@ -39,7 +39,7 @@ export class Register extends Component {
             firebase.firestore().collection("users")
                 .doc(uid).set(data).then(r => console.log('Successfully Registered.'))
         }).catch(function (error) {
-            alert(error.message())
+            console.log(error)
         });
     }
 

@@ -35,11 +35,6 @@ export default function Add() {
     }
     return (
         <View style={styles.container}>
-            <View style={styles.cameraContainer}>
-                <Camera style={styles.fixedRatio} type={type} ratio={'1:1'} ref={ref => setCamera(ref)}>
-                    <TouchableOpacity style={styles.captureButton} onPress={() => takePicture()}/>
-                </Camera>
-            </View>
             <Button
                 style={styles.button}
                 title="Flip Camera"
@@ -51,6 +46,13 @@ export default function Add() {
                     );
                 }}>
             </Button>
+            <View style={styles.cameraContainer}>
+                <Camera style={styles.fixedRatio} type={type} ratio={'1:1'} ref={ref => setCamera(ref)}>
+                    <TouchableOpacity style={styles.captureButton} onPress={() => takePicture()}/>
+                </Camera>
+            </View>
+            <StatusBar style="auto" />
+            {/*<Button style={styles.flashModeButton}  />*/}
             {
                 image && <Image source={{uri: image}} style={styles.captureImage}/>
             }
