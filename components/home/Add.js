@@ -13,6 +13,7 @@ export default function Add() {
     const [type, setType] = useState(Camera.Constants.Type.back);
 
     const [previewVisible, setPreviewVisible] = useState(false);
+    const [flashMode, setFlashMode] = useState('off');
 
     useEffect(() => {
         (async () => {
@@ -32,12 +33,34 @@ export default function Add() {
         }
     }
 
+    const savePicture = async () => {
+        //    Save code here
+    }
+
+    const retakePicture = async () => {
+        setImage(null);
+        setPreviewVisible(false);
+    }
+
+    const handleFlashMode = async () => {
+        if (flashMode === 'on') setFlashMode('off');
+        else if (flashMode === 'off') setFlashMode('on');
+        else setFlashMode('auto');
+    }
+
+    const switchCamera = async () => {
+        if (type === Camera.Constants.Type.back) setType(Camera.Constants.Type.front);
+        else setType(Camera.Constants.Type.back)
+    }
+
     if (hasPermission === null) {
         return <View/>;
     }
+
     if (hasPermission === false) {
         return <Text>No access to camera</Text>;
     }
+
     return (
         <View style={styles.container}>
             {/*<Button*/}
