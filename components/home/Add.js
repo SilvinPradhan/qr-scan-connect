@@ -3,12 +3,15 @@ import {StyleSheet, Text, View, Button, Image} from 'react-native';
 import {Camera} from 'expo-camera'
 import * as ImagePicker from 'expo-image-picker'
 import {TouchableOpacity} from "react-native";
+import {StatusBar} from "expo-status-bar";
 
 export default function Add() {
     const [hasPermission, setHasPermission] = useState(null);
     const [camera, setCamera] = useState(null)
     const [image, setImage] = useState(null)
     const [type, setType] = useState(Camera.Constants.Type.back);
+
+    const [previewVisible, setPreviewVisible] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -24,6 +27,7 @@ export default function Add() {
             const data = await camera.takePictureAsync(null);
             // console.log(data.uri)
             setImage(data.uri)
+            setPreviewVisible(true)
         }
     }
 
@@ -47,11 +51,15 @@ export default function Add() {
                 }}>
             </Button>
             <View style={styles.cameraContainer}>
-                <Camera style={styles.fixedRatio} type={type} ratio={'1:1'} ref={ref => setCamera(ref)}>
-                    <TouchableOpacity style={styles.captureButton} onPress={() => takePicture()}/>
+                <Camera style={styles.fixedRatio} type={type} ref={ref => setCamera(ref)}>
+                    <View style={styles.cameraSecondary}>
+                        <View style={styles.cameraTertiary}>
+                            <TouchableOpacity style={styles.captureButton} onPress={() => takePicture()}/>
+                        </View>
+                    </View>
                 </Camera>
             </View>
-            <StatusBar style="auto" />
+            <StatusBar style="auto"/>
             {/*<Button style={styles.flashModeButton}  />*/}
             {
                 image && <Image source={{uri: image}} style={styles.captureImage}/>
@@ -66,11 +74,26 @@ const styles = StyleSheet.create({
     },
     fixedRatio: {
         flex: 1,
-        aspectRatio: 1
+        aspectRatio: 1,
+        width: '100%'
     },
     cameraContainer: {
         flex: 1,
         flexDirection: 'row',
+    },
+    cameraSecondary: {
+        position: 'absolute',
+        bottom: 0,
+        flexDirection: 'row',
+        flex: 1,
+        width: '100%',
+        padding: 20,
+        justifyContent: 'space-between'
+    },
+    cameraTertiary: {
+        alignSelf: 'center',
+        flex: 1,
+        alignItems: 'center'
     },
     buttonContainer: {
         flex: 1,
@@ -86,8 +109,6 @@ const styles = StyleSheet.create({
         flex: 1
     },
     captureButton: {
-        alignSelf: 'center',
-        alignItems: 'center',
         width: 40,
         height: 40,
         bottom: 0, borderRadius: 50,
