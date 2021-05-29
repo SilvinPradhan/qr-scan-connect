@@ -1,9 +1,9 @@
 import {StatusBar} from 'expo-status-bar'
 import React, {useRef} from 'react'
-import {StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image, Platform} from 'react-native'
+import {StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground} from 'react-native'
 import {Camera} from 'expo-camera'
 import * as ImagePicker from 'expo-image-picker'
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import IonIcon from "react-native-vector-icons/Ionicons";
 
 let camera = Camera
 export default function Add() {
@@ -173,16 +173,21 @@ export default function Add() {
                                         <TouchableOpacity
                                             onPress={__takePicture}
                                             style={{
-                                                width: 70,
-                                                height: 70,
+                                                width: 40,
+                                                height: 40,
                                                 bottom: 0,
                                                 borderRadius: 50,
                                                 backgroundColor: '#fff'
                                             }}
                                         />
-                                        <TouchableOpacity onPress={() => pickImage()} style={{}}>
-                                            <MaterialCommunityIcons name="insert-photo" color='#fff' size={12}
-                                                                    direction="left"/>
+                                        <TouchableOpacity onPress={() => pickImage()} style={{
+                                            width: 130,
+                                            height: 40,
+                                            justifyContent: 'flex-end',
+                                            alignItems: 'center',
+                                            bottom: 0
+                                        }}>
+                                            <IonIcon name="image-outline" size={13} color="#fff"/>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
