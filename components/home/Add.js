@@ -66,18 +66,19 @@ export default function Add() {
         }
     }
 
-    const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+    const __pickImage = async () => {
+        let photo = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [1, 1],
             quality: 1,
         });
 
-        console.log(result);
+        console.log(photo);
 
-        if (!result.cancelled) {
-            setCapturedImage(result.uri);
+        if (!photo.cancelled) {
+            setPreviewVisible(true)
+            setCapturedImage(photo);
         }
     };
 
@@ -91,7 +92,8 @@ export default function Add() {
                     }}
                 >
                     {previewVisible && capturedImage ? (
-                        <CameraPreview photo={capturedImage} savePhoto={__savePhoto} retakePicture={__retakePicture}/>
+                        <CameraPreview photo={capturedImage} savePhoto={__savePhoto} retakePicture={__retakePicture}
+                                       pickImage={capturedImage}/>
                     ) : (
                         <Camera
                             type={cameraType}
@@ -180,7 +182,7 @@ export default function Add() {
                                                 backgroundColor: '#fff'
                                             }}
                                         />
-                                        <TouchableOpacity onPress={() => pickImage()} style={{
+                                        <TouchableOpacity onPress={() => __pickImage()} style={{
                                             width: 130,
                                             height: 40,
                                             justifyContent: 'flex-end',
@@ -243,7 +245,7 @@ const styles = StyleSheet.create({
     }
 })
 
-const CameraPreview = ({photo, retakePicture, savePhoto}) => {
+const CameraPreview = ({photo, retakePicture, savePhoto, pickImage}) => {
     console.log('sdsfds', photo)
     return (
         <View
@@ -255,7 +257,7 @@ const CameraPreview = ({photo, retakePicture, savePhoto}) => {
             }}
         >
             <ImageBackground
-                source={{uri: photo && photo.uri}}
+                source={{uri: (photo || pickImage) && (photo.uri || pickImage)}}
                 style={{
                     flex: 1
                 }}
