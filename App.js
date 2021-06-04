@@ -10,6 +10,7 @@ import PreRegisterScreen from './components/auth/PreRegister'
 import firebase from 'firebase'
 import LoginScreen from "./components/auth/Login";
 import AddScreen from "./components/home/Add"
+import SaveScreen from "./components/home/Save"
 import {Provider} from 'react-redux'
 import {createStore, applyMiddleware} from "redux";
 import rootReducer from './redux/reducer'
@@ -96,7 +97,8 @@ export class App extends Component {
                 <NavigationContainer>
                     <Stack.Navigator initialRouteName="Home">
                         <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
-                        <Stack.Screen name="Add" component={AddScreen}/>
+                        <Stack.Screen name="Add" component={AddScreen} navigation={this.props.navigation}/>
+                        <Stack.Screen name="Save" component={SaveScreen} />
                     </Stack.Navigator>
                 </NavigationContainer>
             </Provider>
