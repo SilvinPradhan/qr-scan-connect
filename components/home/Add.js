@@ -6,7 +6,7 @@ import * as ImagePicker from 'expo-image-picker'
 import IonIcon from "react-native-vector-icons/Ionicons";
 
 let camera = Camera
-export default function Add() {
+export default function Add({navigation}) {
     const ref = useRef(null);
     const [startCamera, setStartCamera] = React.useState(false)
     const [startGallery, setStartGallery] = React.useState(false)
@@ -42,7 +42,7 @@ export default function Add() {
         }
     }
     const __savePhoto = () => {
-
+        navigation.navigate('Save', {capturedImage})
     }
     const __retakePicture = async () => {
         setCapturedImage(null)
@@ -313,7 +313,7 @@ const CameraPreview = ({photo, retakePicture, savePhoto, pickImage}) => {
                                     fontSize: 20
                                 }}
                             >
-                                save photo
+                                Save
                             </Text>
                         </TouchableOpacity>
                     </View>
