@@ -4,6 +4,7 @@ import {StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground} from '
 import {Camera} from 'expo-camera'
 import * as ImagePicker from 'expo-image-picker'
 import IonIcon from "react-native-vector-icons/Ionicons";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 let camera = Camera
 export default function Add({navigation}) {
@@ -297,25 +298,37 @@ const CameraPreview = ({photo, retakePicture, savePhoto, pickImage}) => {
                                 </Text>
                             </TouchableOpacity>
                         </View>
-                        <TouchableOpacity
-                            onPress={savePhoto}
-                            style={{
-                                width: 130,
-                                height: 40,
 
-                                alignItems: 'center',
-                                borderRadius: 4
-                            }}
-                        >
-                            <Text
+                        <View style={{flexDirection: 'row'}}>
+                            <TouchableOpacity
+                                onPress={savePhoto}
                                 style={{
-                                    color: '#fff',
-                                    fontSize: 20
+                                    width: 130,
+                                    height: 40,
+
+                                    alignItems: 'center',
+                                    borderRadius: 4
                                 }}
                             >
-                                Save
-                            </Text>
-                        </TouchableOpacity>
+                                <Text
+                                    style={{
+                                        color: '#fff',
+                                        fontSize: 20
+                                    }}
+                                >
+                                    Save
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                // onPress={savePhoto}
+                                style={{
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <MaterialCommunityIcons name="download" color="#fff"/>
+                            </TouchableOpacity>
+                        </View>
+
                     </View>
                 </View>
             </ImageBackground>

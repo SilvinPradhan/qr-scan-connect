@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
 import {View, TextInput, Image, Button} from "react-native";
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 require("firebase/firestore");
 require("firebase/firebase-storage")
 
 export default function Save(props) {
-    console.log(props.route.params);
+    // console.log(props.route.params);
     const [caption, setCaption] = useState("");
     const uploadImage = async () => {
         const uri = props.route.params.capturedImage;
@@ -16,8 +16,8 @@ export default function Save(props) {
         const blob = await response.blob();
 
         const task = firebase.storage().ref().child(childPath).put(blob);
-        const taskProgress = snapshot => {
-            console.log(`transferred: ${snapshot.bytesTransferred}`)
+        const taskProgress = snapShot => {
+            console.log(`transferred: ${snapShot.bytesTransferred}`)
         }
         const taskCompleted = () => {
             task.snapshot.ref.getDownloadURL().then(snapShot => {
@@ -28,12 +28,13 @@ export default function Save(props) {
             console.log(snapShot)
         }
         task.on("state_changed", taskProgress, taskError, taskCompleted);
+        console.log("sent")
     }
     return (
         <View style={{flex: 1}}>
-            <Image source={{uri: uri}}/>
+            <Image source={{uri: props.route.params.capturedImage}} style={{flex: 1}}/>
             <TextInput placeholder="Write a caption for the picture." onChangeText={(caption) => setCaption(caption)}/>
-            <Button title={"Save"} onPresss={() => uploadImage()}/>
+            <Button title={"Save"} onPress={() => uploadImage()}/>
         </View>
     )
 }
