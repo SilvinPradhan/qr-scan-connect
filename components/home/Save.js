@@ -1,40 +1,75 @@
 import React, {useState} from 'react'
-import {View, TextInput, Image, Button} from "react-native";
-import firebase from 'firebase/app';
+import {View, TextInput, Image, Button} from 'react-native'
 
-require("firebase/firestore");
+import firebase from 'firebase'
+
+require("firebase/firestore")
 require("firebase/firebase-storage")
 
+
 export default function Save(props) {
-    // console.log(props.route.params);
-    const [caption, setCaption] = useState("");
+    const [caption, setCaption] = useState("")
+
     const uploadImage = async () => {
+        console.log(props)
         const uri = props.route.params.capturedImage;
+        const metadata = {
+            contentType: 'image/png'
+        }
         const childPath = `post/${firebase.auth().currentUser.uid}/${Math.random().toString(36)}`;
+        console.log(childPath)
 
         const response = await fetch(uri);
         const blob = await response.blob();
 
-        const task = firebase.storage().ref().child(childPath).put(blob);
-        const taskProgress = snapShot => {
-            console.log(`transferred: ${snapShot.bytesTransferred}`)
+        const task = firebase
+            .storage()
+            .ref()
+            .child(childPath)
+            .put(blob, metadata);
+
+        const taskProgress = snapshot => {
+            console.log(`transferred: ${snapshot.bytesTransferred}`)
         }
+
         const taskCompleted = () => {
-            task.snapshot.ref.getDownloadURL().then(snapShot => {
-                console.log(snapShot)
+            task.snapshot.ref.getDownloadURL().then((snapshot) => {
+                // savePostData(snapshot);
+                console.log(snapshot)
             })
         }
-        const taskError = snapShot => {
-            console.log(snapShot)
+
+        const taskError = snapshot => {
+            console.log(snapshot)
         }
+
         task.on("state_changed", taskProgress, taskError, taskCompleted);
-        console.log("sent")
     }
+
+    // const savePostData = (downloadURL) => {
+    //
+    //     firebase.firestore()
+    //         .collection('posts')
+    //         .doc(firebase.auth().currentUser.uid)
+    //         .collection("userPosts")
+    //         .add({
+    //             downloadURL,
+    //             caption,
+    //             likesCount: 0,
+    //             creation: firebase.firestore.FieldValue.serverTimestamp()
+    //         }).then((function () {
+    //         props.navigation.popToTop()
+    //     }))
+    // }
     return (
         <View style={{flex: 1}}>
-            <Image source={{uri: props.route.params.capturedImage}} style={{flex: 1}}/>
-            <TextInput placeholder="Write a caption for the picture." onChangeText={(caption) => setCaption(caption)}/>
-            <Button title={"Save"} onPress={() => uploadImage()}/>
+            <Image source={{uri: props.route.params.capturedImage}}/>
+            <TextInput
+                placeholder="Write a Caption . . ."
+                onChangeText={(caption) => setCaption(caption)}
+            />
+
+            <Button title="Save" onPress={() => uploadImage()}/>
         </View>
     )
 }

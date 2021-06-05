@@ -73,6 +73,8 @@ export default function Add({navigation}) {
             allowsEditing: true,
             aspect: [1, 1],
             quality: 1,
+        }, (response) => {
+            console.log('Response = ', response)
         });
 
         console.log(photo);
