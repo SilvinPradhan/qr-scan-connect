@@ -3,6 +3,7 @@ import React, {useRef} from 'react'
 import {StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground} from 'react-native'
 import {Camera} from 'expo-camera'
 import * as ImagePicker from 'expo-image-picker'
+import * as Permissions from 'expo-permissions'
 import IonIcon from "react-native-vector-icons/Ionicons";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 
@@ -40,11 +41,16 @@ export default function Add({navigation}) {
             setPreviewVisible(true)
             //setStartCamera(false)
             setCapturedImage(photo)
+            console.log(setCapturedImage(photo))
         }
     }
     const __savePhoto = () => {
         navigation.navigate('Save', {capturedImage})
     }
+    const __saveToGallery = async () => {
+        // const {status} = Permissions.askAsync(Permissions.CAMERA_ROLL);
+    }
+
     const __retakePicture = async () => {
         setCapturedImage(null)
         setPreviewVisible(false)

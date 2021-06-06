@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, useState} from 'react'
 import 'react-native-gesture-handler'
 import {Image, Text, TextInput, TouchableOpacity, View, Button} from "react-native";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -37,7 +37,7 @@ export class Login extends Component {
     }
 
     signInWithGoogle = async () => {
-       console.log("Google Sign in")
+        console.log("Google Sign in")
     }
 
     render() {
