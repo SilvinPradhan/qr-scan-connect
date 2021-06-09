@@ -37,11 +37,12 @@ export default function Add({navigation}) {
     const __takePicture = async () => {
         if (camera) {
             const photo = await ref.current.takePictureAsync(null)
-            console.log(photo)
+            console.log(photo.uri)
             setPreviewVisible(true)
             //setStartCamera(false)
             setCapturedImage(photo)
-            console.log(setCapturedImage(photo))
+            console.log('Photo set below');
+            console.log(photo)
         }
     }
     const __savePhoto = () => {
